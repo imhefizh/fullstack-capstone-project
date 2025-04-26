@@ -6,6 +6,7 @@ import './App.css';
 import Navbar from './components/Navbar/Navbar';
 import RegisterPage from './components/RegisterPage/RegisterPage.js'
 import LoginPage from './components/LoginPage/LoginPage.js'
+import DetailsPage from './components/DetailsPage/DetailsPage.js';
 
 function App() {
 
@@ -18,6 +19,7 @@ function App() {
           <Route path="/app" element={<MainPage />} />
           <Route path="/app/login" element={<LoginPage/>} />
           <Route path="/app/register" element={<RegisterPage />} />
+          <Route path="/app/product/:productId" element={<DetailsPage/>} />
         </Routes>
         </>
   );
