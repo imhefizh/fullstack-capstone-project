@@ -4,7 +4,7 @@ const express = require('express');
 const cors = require('cors');
 const pinoLogger = require('./logger');
 
-const connectToDatabase = require('./models/db');
+const connectToDatabase = require('./models/db.js');
 const {loadData} = require("./util/import-mongo/index");
 
 
@@ -22,10 +22,10 @@ connectToDatabase().then(() => {
 app.use(express.json());
 
 // Route files
-const giftroutes = require('./routes/giftRoutes')
+const giftroutes = require('./routes/giftRoutes.js')
 
 // Search API Task 1: import the searchRoutes and store in a constant called searchRoutes
-const searchRoutes = require('./routes/searchRoutes')
+const searchRoutes = require('./routes/searchRoutes.js')
 
 
 const pinoHttp = require('pino-http');

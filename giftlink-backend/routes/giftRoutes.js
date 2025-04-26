@@ -1,4 +1,7 @@
-import connectToDatabase from "../models/db";
+const connectToDatabase = require('../models/db')
+const express = require('express');
+
+const router = express();
 
 router.get('/', async (req, res) => {
     try {
