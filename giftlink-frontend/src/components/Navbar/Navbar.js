@@ -11,8 +11,11 @@ export default function Navbar() {
                     <li className="nav-item">
                         <a className="nav-link" href="/home.html">Home</a>
                     </li>
-                    <li className="nav-link" href="/app">
+                    <li className="nav-item">
                         <a className="nav-link" href="/app">Gifts</a>
+                    </li>
+                    <li className="nav-item">
+                        <a className="nav-link" href="/app/search">Search</a>
                     </li>
                 </ul>
             </div>
