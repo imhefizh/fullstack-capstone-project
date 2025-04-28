@@ -68,7 +68,7 @@ router.post('/login', async (req, res) => {
             const userName = doesEmailExists.firstName;
             const userEmail = doesEmailExists.email;
 
-            const payload = {
+            const payload = { 
                 user: {
                     id: doesEmailExists._id.toString(),
                 },
