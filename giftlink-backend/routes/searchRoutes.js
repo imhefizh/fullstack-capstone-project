@@ -5,7 +5,7 @@ const connectToDatabase = require('../models/db');
 // Search for gifts
 router.get('/', async (req, res, next) => {
     try {
-        const db = await connectToDatabase()
+        const db = await connectToDatabase();
 
         const collection = db.collection("gifts");
 
@@ -19,7 +19,7 @@ router.get('/', async (req, res, next) => {
 
         // Task 3: Add other filters to the query
         if (req.query.category) {
-            query.category = req.query.category;        
+            query.category = req.query.category;
         }
         if (req.query.condition) {
             query.condition = req.query.condition;
@@ -29,7 +29,7 @@ router.get('/', async (req, res, next) => {
         }
 
         // Task 4: Fetch filtered gifts using the find(query) method. Make sure to use await and store the result in the `gifts` constant
-        const gifts = await collection.find({query}).toArray();
+        const gifts = await collection.find({ query }).toArray();
 
         res.json(gifts);
     } catch (e) {

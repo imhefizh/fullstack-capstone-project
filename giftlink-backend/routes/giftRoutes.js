@@ -1,15 +1,15 @@
-const connectToDatabase = require('../models/db')
+const connectToDatabase = require('../models/db');
 const express = require('express');
 
 const router = express.Router();
 
 router.get('/', async (req, res) => {
     try {
-        const db = await connectToDatabase()
+        const db = await connectToDatabase();
 
-        const collection = db.collection("gifts")
+        const collection = db.collection("gifts");
 
-        const gifts = await collection.find({}).toArray()
+        const gifts = await collection.find({}).toArray();
 
         res.json(gifts);
     } catch (e) {
@@ -20,13 +20,13 @@ router.get('/', async (req, res) => {
 
 router.get('/:id', async (req, res) => {
     try {
-        const db = await connectToDatabase()
+        const db = await connectToDatabase();
 
-        const collection = db.collection("gifts")
+        const collection = db.collection("gifts");
 
         const id = req.params.id;
 
-        const gift = collection.findOne({ id: id })
+        const gift = collection.findOne({ id: id });
 
         if (!gift) {
             return res.status(404).send('Gift not found');
@@ -39,9 +39,6 @@ router.get('/:id', async (req, res) => {
     }
 });
 
-
-
-// Add a new gift
 router.post('/', async (req, res, next) => {
     try {
         const db = await connectToDatabase();
