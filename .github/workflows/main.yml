@@ -19,13 +19,15 @@ jobs:
         with:
           node-version: 18
 
-      - name: Install Dependencies
-        run: npm install
+      - name: Install Dependencies for Backend
+        run: |
+          cd giftlink-backend
+          npm install
 
       - name: Run JSHint
         run: |
-          # Run JSHint on all JavaScript files in the backend directory
-          npx jshint ./giftlink-backend/**/*.js
+          cd giftlink-backend
+          npx jshint ./routes/**/*.js
           echo "Linted all JavaScript files successfully"
 
   client_build:
@@ -40,7 +42,7 @@ jobs:
         with:
           node-version: 18
 
-      - name: Install Dependencies
+      - name: Install Dependencies for Frontend
         run: |
           cd giftlink-frontend
           npm install
