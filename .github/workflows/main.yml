@@ -1,43 +1,52 @@
 name: 'CI/CD'
+
 on:
   push:
     branches: [master, main]
   pull_request:
     branches: [master, main]
+
 jobs:
   lint_js:
-      name: Lint JavaScript Files
-      runs-on: ubuntu-latest
-      steps:
+    name: Lint JavaScript Files
+    runs-on: ubuntu-latest
+    steps:
       - name: Checkout Repository
         uses: actions/checkout@v3
+
       - name: Install Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: 14
-      - name: Install JSHint
-        run: npm install jshint --global
-      - name: Run Linter
+          node-version: 18
+
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Run JSHint
         run: |
-          # This command finds all JavaScript files recursively and runs JSHint on them
-          find ./giftlink-backend -name app.js -exec jshint {} +
-          find ./giftlink-backend -name auth.js -exec jshint {} +
-          find ./giftlink-backend -name giftRoutes.js -exec jshint {} +
-          find ./giftlink-backend -name searchRoutes.js -exec jshint {} +
-          echo "Linted all the js files successfully"
+          # Run JSHint on all JavaScript files in the backend directory
+          npx jshint ./giftlink-backend/**/*.js
+          echo "Linted all JavaScript files successfully"
+
   client_build:
-      name: Build client
-      runs-on: ubuntu-latest
-      steps:
+    name: Build Client
+    runs-on: ubuntu-latest
+    steps:
       - name: Checkout Repository
         uses: actions/checkout@v3
+
       - name: Install Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: 14
-      - name: Run build
+          node-version: 18
+
+      - name: Install Dependencies
         run: |
           cd giftlink-frontend
           npm install
+
+      - name: Build Client
+        run: |
+          cd giftlink-frontend
           npm run build
-          echo "Client-side build successfully"
+          echo "Client-side build completed successfully"
