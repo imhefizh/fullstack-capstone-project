@@ -1,4 +1,5 @@
 const pino = require('pino');
+require('dotenv').config();
 
 let logger;
 

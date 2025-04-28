@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react"
 import './LoginPage.css'
-import { urlConfig } from '../../config.js'
 import { useAppContext } from '../../context/AuthContext.js'
 import { useNavigate } from 'react-router-dom'
 
@@ -20,21 +19,21 @@ export default function LoginPage() {
     }, [navigate])
 
     const handleLogin = async (e) => {
-        try{
+        try {
             e.preventDefault();
             const response = await fetch(`/api/auth/login`, {
-               method: 'POST',
-               headers: {
-                'content-type': 'application/json',
-                'Authorizzation': bearerToken ? `Bearer ${bearerToken}` : '',
-               },
-               body: JSON.stringify({
-                email: email,
-                password: password,
-               })
+                method: 'POST',
+                headers: {
+                    'content-type': 'application/json',
+                    'Authorizzation': bearerToken ? `Bearer ${bearerToken}` : '',
+                },
+                body: JSON.stringify({
+                    email: email,
+                    password: password,
+                })
             });
 
-            const json = await res.json()
+            const json = await response.json()
 
             if (json.authToken) {
                 sessionStorage.setItem('auth-token', json.authToken);
@@ -50,7 +49,7 @@ export default function LoginPage() {
                     setIncorrect('');
                 }, 2000)
             }
-          }catch (e) {
+        } catch (e) {
             console.log("Error fetching details: " + e.message);
         }
     }
@@ -69,7 +68,7 @@ export default function LoginPage() {
                                 className="form-control"
                                 placeholder="Enter your email"
                                 value={email}
-                                onChange={(e) => {setEmail(e.target.value); setIncorrect("")}}
+                                onChange={(e) => { setEmail(e.target.value); setIncorrect("") }}
                             />
                         </div>
                         <div className="mb-4">
@@ -80,9 +79,9 @@ export default function LoginPage() {
                                 className="form-control"
                                 placeholder="Enter your password"
                                 value={password}
-                                onChange={(e) => {setPassword(e.target.value);setIncorrect("")}}
+                                onChange={(e) => { setPassword(e.target.value); setIncorrect("") }}
                             />
-                            <span style={{color:'red',height:'.5cm',display:'block',fontStyle:'italic',fontSize:'12px'}}>{incorrect}</span>
+                            <span style={{ color: 'red', height: '.5cm', display: 'block', fontStyle: 'italic', fontSize: '12px' }}>{incorrect}</span>
                         </div>
                         <button className="btn btn-primary w-100 mb-3" onClick={handleLogin}>Login</button>
                         <p className="mt-4 text-center">
