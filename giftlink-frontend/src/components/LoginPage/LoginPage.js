@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react"
 import './LoginPage.css'
 import { useAppContext } from '../../context/AuthContext.js'
 import { useNavigate } from 'react-router-dom'
+import { urlConfig } from "../../config.js"
 
 export default function LoginPage() {
     const [email, setEmail] = useState('')
@@ -13,30 +14,37 @@ export default function LoginPage() {
 
 
     useEffect(() => {
+        console.log(sessionStorage.getItem('auth-token'))
         if (sessionStorage.getItem('auth-token')) {
             navigate('/app')
         }
     }, [navigate])
 
     const handleLogin = async (e) => {
+        e.preventDefault();
+
         try {
             e.preventDefault();
-            const response = await fetch(`/api/auth/login`, {
+            console.log("Hitting API")
+            const response = await fetch(`${urlConfig.backendUrl}/api/auth/login`, {
                 method: 'POST',
                 headers: {
                     'content-type': 'application/json',
-                    'Authorizzation': bearerToken ? `Bearer ${bearerToken}` : '',
+                    'Authorization': bearerToken ? `Bearer ${bearerToken}` : '',
                 },
                 body: JSON.stringify({
                     email: email,
                     password: password,
                 })
             });
-
+            
             const json = await response.json()
-
-            if (json.authToken) {
-                sessionStorage.setItem('auth-token', json.authToken);
+            
+            // console.log("Checkpoint 1")
+            // console.log(json)
+            if (json.authtoken) {
+                // console.log("Checkpoint 2")
+                sessionStorage.setItem('auth-token', json.authtoken);
                 sessionStorage.setItem('name', json.userName);
                 sessionStorage.setItem('email', json.userEmail);
                 setIsLoggedIn(true);

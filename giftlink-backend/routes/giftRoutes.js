@@ -25,13 +25,13 @@ router.get('/:id', async (req, res) => {
         const collection = db.collection("gifts");
 
         const id = req.params.id;
-
-        const gift = collection.findOne({ id: id });
-
+        const gift = await collection.findOne({ id });
+        
         if (!gift) {
             return res.status(404).send('Gift not found');
         }
-
+        
+        // console.log(gift)
         res.json(gift);
     } catch (e) {
         console.error('Error fetching gift:', e);

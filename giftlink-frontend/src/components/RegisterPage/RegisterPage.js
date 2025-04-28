@@ -14,17 +14,19 @@ export default function RegisterPage() {
     const { setIsLoggedIn } = useAppContext()
 
     const handleRegister = async () => {
+        console.log(email)
+        console.log(password)
         try {
             const response = await fetch(`${urlConfig.backendUrl}/api/auth/register`, {
                 method: 'POST',
                 headers: {
-                    'content-type': "applications/json",
+                    'content-type': "application/json",
                 },
                 body: JSON.stringify({
-                    firstName: firstName,
-                    lastName: lastName,
-                    email: email,
-                    password: password
+                    "firstName": firstName,
+                    "lastName": lastName,
+                    "email": email,
+                    "password": password,
                 })
             })
             const json = await response.json();

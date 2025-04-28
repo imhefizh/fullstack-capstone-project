@@ -16,46 +16,60 @@ router.post('/register', async (req, res) => {
         const db = await connectToDatabase();
         const collection = db.collection('users');
         const email = req.body.email;
-        const doesEmailExist = await collection.findOne({ email: email }).toArray();
 
-        if (doesEmailExist) {
+        const doesEmailExist = await collection.findOne({ email: email });
+        console.log("Kita bakal masuk ke inti proses")
+        console.log(!doesEmailExist)
+        if (!doesEmailExist) {
+            console.log("Checkout 0")
             const password = req.body.password;
+            console.log(password)
+            console.log(email)
             const salt = await bcryptjs.genSalt(10);
             const hash = await bcryptjs.hash(password, salt);
+            console.log("Checkpoint 1")
 
-            const newUser = await collection.insertOne({
+            const newUser = {
                 email: email,
                 firstName: req.body.firstName,
                 lastName: req.body.lastName,
                 password: hash,
                 createdAt: new Date(),
-            });
+            };
+            console.log(newUser);
 
+            await collection.insertOne(newUser);
+
+            console.log("Checkpoint 2")
             const payload = {
                 user: {
                     id: newUser.insertedId,
                 },
             };
             const authtoken = jwt.sign(payload, JWT_SECRET);
-
+            console.log("Checkpoint 3")
             logger.info('User registered successfully');
             res.json({ authtoken, email });
         } else {
             res.send('Email already exists');
         }
     } catch (err) {
-        console.log(err);
+        console.log("Error");
         return res.status(500).send('Internal server error');
     }
 });
 
 router.post('/login', async (req, res) => {
+    console.log("Ada yang mau login")
     try {
+        console.log("Ayo bekerja")
         const db = await connectToDatabase();
         const collection = db.collection('users');
         const email = req.body.email;
         const password = req.body.password;
         const doesEmailExists = await collection.findOne({ email: email });
+        console.log("Checkpoint 1")
+        console.log(doesEmailExists)
 
         if (doesEmailExists) {
             let result = await bcryptjs.compare(password, doesEmailExists.password);

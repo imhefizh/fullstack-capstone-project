@@ -26,6 +26,7 @@ function SearchPage() {
                     throw new Error(`HTTP error; ${response.status}`)
                 }
                 const data = await response.json();
+                // console.log(data)
                 setSearchResults(data);
             } catch (error) {
                 console.log('Fetch error: ' + error.message);
@@ -37,7 +38,9 @@ function SearchPage() {
 
 
     // Task 2. Fetch search results from the API based on user inputs.
-    const handleSearch = async () => {
+    const handleSearch = async (e) => {
+        e.preventDefault();
+        console.log("Searching")
         const baseUrl = `${urlConfig.backendUrl}/api/search?`;
         const queryParams = new URLSearchParams({
             name: searchQuery,
@@ -47,6 +50,7 @@ function SearchPage() {
         }).toString();
 
         try {
+            console.log(`${baseUrl}${queryParams}`)
             const response = await fetch(`${baseUrl}${queryParams}`);
             if (!response.ok) {
                 throw new Error('Search failed');
